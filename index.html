@@ -1,0 +1,91 @@
+
+<html>
+<head>
+
+
+	<style>
+
+	button {
+	display: block;
+	font-size: 2em;
+	border-radius: 10px;
+	padding: .3em 1em;
+	
+	top: 246px;
+	left: 101px;
+	}
+	</style>
+</head>
+
+<body>
+
+	<div align="center">
+
+		<h1>TOMBOL PINTU AJAIB</h1>
+	  
+        <button onClick="buka()">buka</button>
+		<button onClick="tutup()">tutup</button>
+		<button onClick="kunci()">kunci</button>
+		<button onClick="bukaKunci()">buka kunci</button>
+		
+	</div>
+
+
+<script src="pubnub-3.16.4.js"></script>
+	</script>
+	<script>
+
+	// Initialize the instance
+ 
+	
+
+	
+	// This is the channel name you are subscribing in remote-led.py
+	var channel = 'workshop_iot';
+
+	// Init
+	var p = PUBNUB.init({
+		subscribe_key: 'sub-c-6ac3b2ea-cf31-11e6-bbe2-02ee2ddab7fe',
+		publish_key:   'pub-c-e4956978-c469-4802-b0f0-89761d6b2e5d'
+	});
+
+	function buka() {
+        p.publish({
+            channel : channel, 
+            message : "buka"
+        });
+    }
+	function tutup(){
+		p.publish({
+            channel : channel, 
+            message : "tutup"
+        });
+	}
+	function kunci(){
+		p.publish({
+            channel : channel, 
+            message : "kunci"
+        });
+	}
+
+	function bukaKunci(){
+		p.publish({
+            channel : channel, 
+            message : "bukakunci"
+        });
+	}
+
+	p.subscribe({
+    channel : 'workshop',
+    message : function(m){
+        console.log(m)
+    },
+    error : function (error) {
+        // Handle error here
+        console.log(JSON.stringify(error));
+    }
+	});
+
+	</script
+</body>
+</html>
