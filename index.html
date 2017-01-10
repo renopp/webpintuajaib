@@ -14,6 +14,18 @@
 	top: 246px;
 	left: 101px;
 	}
+
+	.boxed {
+	width: 300px;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;
+	margin-left: auto;
+    margin-right: auto;
+	text-align: center;
+	background-color: #7FFF00;
+	}
+
 	</style>
 </head>
 
@@ -23,13 +35,15 @@
 
 		<h1>TOMBOL PINTU AJAIB</h1>
 	  
-        <button onClick="buka()">buka</button>
-		<button onClick="tutup()">tutup</button>
-		<button onClick="kunci()">kunci</button>
-		<button onClick="bukaKunci()">buka kunci</button>
+        <button id="btnBuka" onClick="buka()">buka</button>
+		<button id="btnTutup" onClick="tutup()">tutup</button>
+		<button id="btnKunci" onClick="kunci()">kunci</button>
+		<button id="btnBukaKunci" onClick="bukaKunci()">buka kunci</button>
 		
 	</div>
-
+	<div id="statusPintu" class="boxed">
+		STATUS PINTU
+	</div>
 
 <script src="pubnub-3.16.4.js"></script>
 	</script>
@@ -78,7 +92,16 @@
 	p.subscribe({
     channel : 'workshop',
     message : function(m){
-        console.log(m)
+		var property = document.getElementById("statusPintu");
+
+		if(m == 1){
+        property.style.backgroundColor = "#FF0000"
+		property.textContent = "pintu terkunci dan ada yang mencoba membuka paksa";
+		} else {
+		property.style.backgroundColor = "#7FFF00"
+		property.textContent = m;
+		}
+        
     },
     error : function (error) {
         // Handle error here
